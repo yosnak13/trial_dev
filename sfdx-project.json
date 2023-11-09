@@ -1,0 +1,12 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    }
+  ],
+  "name": "trailExam",
+  "namespace": "",
+  "sfdcLoginUrl": "https://circlaceinc-e0-dev-ed.develop.my.salesforce.com",
+  "sourceApiVersion": "58.0"
+}
