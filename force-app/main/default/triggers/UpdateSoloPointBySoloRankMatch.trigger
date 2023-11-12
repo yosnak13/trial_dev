@@ -2,17 +2,17 @@ trigger UpdateSoloPointBySoloRankMatch on SoloMatchResult__c(after insert) {
   List<SoloMatchResult__c> resultList = Trigger.new;
   SoloMatchResult__c result = resultList[0];
 
-  Id participantId = result.Participant__c;
-  List<Contact> participantList = [
+  Id challengerId = result.Challenger__c;
+  List<Contact> challengerList = [
     SELECT Id, Name, TotalSoloPoint__c
     FROM Contact
-    WHERE Id = :participantId
+    WHERE Id = :challengerId
   ];
 
-  Contact participant = participantList[0];
-  participant.TotalSoloPoint__c += result.PointForParticipant__c;
+  Contact challenger = challengerList[0];
+  challenger.TotalSoloPoint__c += result.PointForChallenger__c;
 
-  update participant;
+  update challenger;
 
   Id opponentId = result.Opponent__c;
   // TODO: 冗長。取得メソッドは再利用するのでApexクラスに移したい。
