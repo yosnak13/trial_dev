@@ -12,8 +12,6 @@ trigger UpdateSoloPointBySoloRankMatch on SoloMatchResult__c(after insert) {
   Contact challenger = challengerList[0];
   challenger.TotalSoloPoint__c += result.PointForChallenger__c;
 
-  update challenger;
-
   Id opponentId = result.Opponent__c;
   // TODO: 冗長。取得メソッドは再利用するのでApexクラスに移したい。
   List<Contact> opponentList = [
@@ -25,6 +23,8 @@ trigger UpdateSoloPointBySoloRankMatch on SoloMatchResult__c(after insert) {
   Contact opponent = opponentList[0];
   opponent.TotalSoloPoint__c += result.PointForOpponent__c;
 
-  // TODO: Listでまとめて一括DMLでUpdateできないか。
-  update opponent;
+  List<Contact> acctsToUpdate = new List<Contact>();
+  acctsToUpdate.add(challenger);
+  acctsToUpdate.add(opponent);
+  update acctsToUpdate;
 }
